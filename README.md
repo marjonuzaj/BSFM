@@ -38,4 +38,10 @@ model.fit_halfnormal(nsim=10000, burn=2000)
 
 # Print summary
 print(model.summary())
+
+# Plot hist of inef est
+plt.hist(model.inef_est, bins=50, edgecolor='lightgrey')
+plt.xlabel('Inef Est')
+plt.xlim(0,max(model.inef_est)+0.1)
+plt.show()
 ```
