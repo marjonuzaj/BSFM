@@ -82,7 +82,7 @@ class SFM:
         self.inef_est = u_post_save.mean(axis=0)
             
             
-    def summary(self):
+    def summary(self) -> pd.DataFrame:
         
         index_names = ['const'] + self.exog + ['sigmav']
         
