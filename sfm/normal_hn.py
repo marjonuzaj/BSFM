@@ -1,9 +1,11 @@
-import numpy as np 
+import numpy as np
 import pandas as pd
+import scipy
 import statsmodels.api as sm
-import scipy 
 
-class SFM:
+
+
+class HN:
     def __init__(self, data: pd.DataFrame, endogenous: str):
         self.df = data
         self.end = endogenous
@@ -13,8 +15,7 @@ class SFM:
         self.X = data[self.exog]
         self.X = sm.add_constant(self.X)
     
-    def fit_halfnormal(self, nsim: int, drop:int) -> None:
-        self.model_type = 'halfnormal'
+    def fit(self, nsim: int, drop:int) -> None:
 
         NSIM = nsim
 
@@ -84,16 +85,7 @@ class SFM:
             
     def summary(self) -> pd.DataFrame:
         
-        index_names = ['const'] + self.exog + ['sigmav']
-        
-        if self.model_type == 'halfnormal':
-          extra_params = ['sigmau']
-        elif self.model_type == 'exponential':
-            extra_params = ['lambda']
-        else:
-            extra_params = ['mu','sigmau']
-          
-        index_names = index_names + extra_params
+        index_names = ['const'] + self.exog + ['sigmav','sigmau']
   
         results_df = pd.DataFrame(columns = ['Mean','Std'], index = index_names)
 
@@ -101,37 +93,16 @@ class SFM:
         beta_std = self.results['beta_post'].std(axis=0)
         sigmav_mean = self.results['sigmav_post'].mean(axis=0)
         sigmav_std = self.results['sigmav_post'].std(axis=0)
+        sigmau_mean = self.results['sigmau_post'].mean(axis=0)
+        sigmau_std = self.results['sigmau_post'].std(axis=0)
 
         results_df.loc[['const'] + self.exog, 'Mean'] = beta_mean
         results_df.loc[['const'] + self.exog, 'Std'] = beta_std
         results_df.loc['sigmav', 'Mean'] = sigmav_mean
         results_df.loc['sigmav', 'Std'] = sigmav_std
+        results_df.loc['sigmau', 'Mean'] = sigmau_mean
+        results_df.loc['sigmau', 'Std'] = sigmau_std
 
-        for param in extra_params:
-          key = f"{param}_post"
-          if key in self.results:
-            results_df.loc[param, 'Mean'] = self.results[key].mean()
-            results_df.loc[param, 'Std'] = self.results[key].std()
 
         return results_df
         
-        
-
-
-if __name__ == "__main__":
-    N = 200
-    x1 = np.random.normal(0,1,(N,1))
-    x2 = np.random.normal(0,1,(N,1))
-    u = np.abs(np.random.normal(0,0.2,(N,1)))
-    v = np.random.normal(0,0.2,(N,1))
-    y = 1 + 0.5 *x1 + 0.4 * x2 + v -u
-    
-    df = pd.DataFrame()
-    df['y'] = y.flatten()
-    df['x1'] = x1.flatten()
-    df['x2'] = x2.flatten()
-
-    model = SFM(df,'y')
-    
-    model.fit_halfnormal(nsim = 5000, drop= 1000)
-    model.summary()

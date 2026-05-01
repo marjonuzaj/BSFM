@@ -1,6 +1,6 @@
 import numpy as np 
 import pandas as pd
-from models import SFM
+import sfm
 import matplotlib.pyplot as plt
 
 N = 1000
@@ -15,9 +15,9 @@ df['y'] = y.flatten()
 df['x1'] = x1.flatten()
 df['x2'] = x2.flatten()
 
-model = SFM(df,'y')
+model = sfm.HN(df,'y')
     
-model.fit_halfnormal(nsim = 10000, drop= 2000)
+model.fit(nsim = 10000, drop= 2000)
 print(model.summary())
 
 plt.scatter(model.inef_est, u)

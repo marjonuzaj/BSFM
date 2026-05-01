@@ -12,15 +12,25 @@ The following assumptions for the inefficiency term are supported:
 - **Exponential Distribution**
 - **Lognormal Distribution**
 
-## Implementation
+## Package Structure
 
-The file `models.py` defines the `SFM` class, which contains all methods related to the stochastic frontier model implementation.
+The `sfm` package is organized as a modular Python package, where each model is implemented in its own file:
 
-Example:
+```
+sfm/
+├── __init__.py   # Exposes the public API
+├── hn.py         # Half-Normal model
+├── exp.py        # Exponential model
+└── ln.py         # Lognormal model
+```
 
-- `fit_halfnormal()` fits the model with $u_{i} \sim N^{+} (0,\sigma_{u}^{2})$
-- `fit_exponential()` fits the model with $u_{i} \sim Exp (\lambda)$
-- `fit_lognormal()` fits the model with $u_{i} \sim Lognormal (\mu,\sigma_{u}^{2})$.
+Each file contains a single model class, and all models are exposed through the package API for easy access.
+
+### Available models:
+
+- `sfm.HN` → Half-Normal stochastic frontier model
+- `sfm.Exp` → Exponential stochastic frontier model
+- `sfm.LN` → Lognormal stochastic frontier model
 
 For all methods, the usual production shocks are modelled as $v_{i} \sim N (0,\sigma_{v}^{2})$.
 
@@ -30,13 +40,13 @@ For all methods, the usual production shocks are modelled as $v_{i} \sim N (0,\s
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from models import SFM
+import sfm
 
 # Create model instance
-model = SFM(data, 'y')
+model = sfm.HN(data, 'y')
 
 # Fit Half-Normal model
-model.fit_halfnormal(nsim=10000, burn=2000)
+model.fit(nsim=10000, burn=2000)
 
 # Print summary
 print(model.summary())
