@@ -22,6 +22,8 @@ Example:
 - `fit_exponential()` fits the model with $u_{i} \sim Exp (\lambda)$
 - `fit_lognormal()` fits the model with $u_{i} \sim Lognormal (\mu,\sigma_{u}^{2})$.
 
+For all methods, the usual production shocks are modelled as $v_{i} \sim N (0,\sigma_{v}^{2})$.
+
 ## Example Usage
 
 ```python
