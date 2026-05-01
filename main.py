@@ -17,7 +17,7 @@ df['x2'] = x2.flatten()
 
 model = SFM(df,'y')
     
-model.fit_half_normal(nsim = 10000, drop= 2000)
+model.fit_halfnormal(nsim = 10000, drop= 2000)
 print(model.summary())
 
 plt.scatter(model.inef_est, u)

@@ -13,7 +13,7 @@ class SFM:
         self.X = data[self.exog]
         self.X = sm.add_constant(self.X)
     
-    def fit_half_normal(self, nsim: int, drop:int) -> None:
+    def fit_halfnormal(self, nsim: int, drop:int) -> None:
         self.model_type = 'halfnormal'
 
         NSIM = nsim
@@ -133,5 +133,5 @@ if __name__ == "__main__":
 
     model = SFM(df,'y')
     
-    model.fit_half_normal(nsim = 5000, drop= 1000)
+    model.fit_halfnormal(nsim = 5000, drop= 1000)
     model.summary()
