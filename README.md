@@ -34,8 +34,8 @@ from models import SFM
 model = SFM(data, 'y')
 
 # Fit Half-Normal model
-results = model.fit_halfnormal(nsim=10000, burn=2000)
+model.fit_halfnormal(nsim=10000, burn=2000)
 
 # Print summary
-print(results.summary())
+print(model.summary())
 ```
