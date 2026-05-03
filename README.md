@@ -18,10 +18,10 @@ The `sfm` package is organized as a modular Python package, where each model is 
 
 ```
 sfm/
-├── __init__.py   # Exposes the public API
-├── hn.py         # Half-Normal model
-├── exp.py        # Exponential model
-└── ln.py         # Lognormal model
+├── __init__.py                  # Exposes the public API
+├── normal_hn.py                 # Half-Normal model
+├── normal_exponential.py        # Exponential model
+└── normal_ln.py                 # Lognormal model
 ```
 
 Each file contains a single model class, and all models are exposed through the package API for easy access.
@@ -29,7 +29,7 @@ Each file contains a single model class, and all models are exposed through the 
 ### Available models:
 
 - `sfm.HN` → Half-Normal stochastic frontier model
-- `sfm.Exp` → Exponential stochastic frontier model
+- `sfm.EXP` → Exponential stochastic frontier model
 - `sfm.LN` → Lognormal stochastic frontier model
 
 For all methods, the usual production shocks are modelled as $v_{i} \sim N (0,\sigma_{v}^{2})$.
