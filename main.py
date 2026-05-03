@@ -16,7 +16,7 @@ df['x1'] = x1.flatten()
 df['x2'] = x2.flatten()
 
 model = sfm.HN(df,'y')
-    
+
 model.fit(nsim = 10000, drop= 2000)
 print(model.summary())
 

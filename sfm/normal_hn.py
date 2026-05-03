@@ -14,6 +14,8 @@ class HN:
         self.Y = data[self.end]
         self.X = data[self.exog]
         self.X = sm.add_constant(self.X)
+        self.results = None
+        self.inef_est = None
     
     def fit(self, nsim: int, drop:int) -> None:
 
