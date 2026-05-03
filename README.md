@@ -43,17 +43,22 @@ import matplotlib.pyplot as plt
 import sfm
 
 # Create model instance
-model = sfm.HN(data, 'y')
+model1 = sfm.HN(data, 'y')
+model2 = sfm.EXP(data, 'y')
 
 # Fit Half-Normal model
-model.fit(nsim=10000, burn=2000)
+model1.fit(nsim=10000, burn=2000)
+model2.fit(nsim=10000, burn=2000)
 
 # Print summary
-print(model.summary())
+print(model1.summary())
+print(model2.summary())
 
 # Plot hist of inef est
-plt.hist(model.inef_est, bins=50, edgecolor='lightgrey')
+plt.hist(model1.inef_est, bins=50, edgecolor='lightgrey', label='HN')
+plt.hist(model2.inef_est, bins=50, edgecolor='lightgrey', label='Exp')
 plt.xlabel('Inef Est')
 plt.xlim(0,max(model.inef_est)+0.1)
+plt.legend()
 plt.show()
 ```
